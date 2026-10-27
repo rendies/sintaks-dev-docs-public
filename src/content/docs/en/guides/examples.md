@@ -102,7 +102,7 @@ curl -sS https://api.sintaks.dev/v1/images/generations \
 - `size` is `WIDTHxHEIGHT` or `auto`. Use a size the model supports (for example `1024x1024`); unsupported sizes fail upstream and are refunded.
 - `n` runs `n` parallel model calls; you receive and pay for only the images that came back.
 - `response_format` must be `"url"` or omitted; `"b64_json"` returns `400` — images are always hosted URLs.
-- Image generation is billed with the model's token rates; see [pricing](/guides/pricing/) and the portal model catalog.
+- Image generation is billed with the model's token rates; see [pricing](/en/guides/pricing/) and the portal model catalog.
 
 ### Errors
 

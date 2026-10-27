@@ -5,8 +5,8 @@ description: User-facing changes to the sintaks.dev API and documentation.
 
 ## 2026-10-27
 
-- **`POST /v1/embeddings`** — OpenAI-compatible embeddings for text inputs, billed at the model's input-token rate. `input` accepts a string or an array of strings; `encoding_format: "float"` and `dimensions` are supported. See the [examples](/guides/examples/).
-- Documentation reorganized: new [Examples](/guides/examples/) and [Troubleshooting](/guides/troubleshooting/) guides, and the quickstart now matches the shipped API surface.
+- **`POST /v1/embeddings`** — OpenAI-compatible embeddings for text inputs, billed at the model's input-token rate. `input` accepts a string or an array of strings; `encoding_format: "float"` and `dimensions` are supported. See the [examples](/en/guides/examples/).
+- Documentation reorganized: new [Examples](/en/guides/examples/) and [Troubleshooting](/en/guides/troubleshooting/) guides, and the quickstart now matches the shipped API surface.
 
 ## 2026-10-13
 

@@ -5,7 +5,7 @@ description: Diagnose common sintaks.dev API errors and failures.
 
 ## Error envelope
 
-Every error is a JSON object with `error.message`, `error.type`, `error.param`, and `error.code`. The full status matrix is in the [errors reference](/reference/errors/).
+Every error is a JSON object with `error.message`, `error.type`, `error.param`, and `error.code`. The full status matrix is in the [errors reference](/en/reference/errors/).
 
 ## 401: invalid API key
 
@@ -34,7 +34,7 @@ Every error is a JSON object with `error.message`, `error.type`, `error.param`, 
 ## 5xx / 502 / 503: upstream failure
 
 - The gateway or the upstream provider is temporarily unavailable.
-- Retry with backoff. Check [status.sintaks.dev](https://status.sintaks.dev) for announcements.
+- Retry with backoff. `GET /healthz` returns `200` when the gateway itself is up; a `503` on `/v1/*` means the upstream provider is unavailable.
 - A request that reached the provider may still consume usage even if the connection failed. Check the Usage & Audit Log before retrying.
 
 ## Streamed requests that disconnect

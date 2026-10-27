@@ -105,4 +105,4 @@ curl https://api.sintaks.dev/v1/chat/completions \
   }'
 ```
 
-Every request requires an API key as a bearer token. See [Authentication](/en/guides/authentication/) and the [endpoint reference](/en/reference/endpoints/) for details. For full copy-paste recipes (streaming, embeddings, images, error handling, slug and OG-card helpers), see [Examples](/guides/examples/).
+Every request requires an API key as a bearer token. See [Authentication](/en/guides/authentication/) and the [endpoint reference](/en/reference/endpoints/) for details. For full copy-paste recipes (streaming, embeddings, images, error handling, slug and OG-card helpers), see [Examples](/en/guides/examples/).

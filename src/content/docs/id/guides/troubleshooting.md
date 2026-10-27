@@ -34,7 +34,7 @@ Setiap error adalah objek JSON dengan `error.message`, `error.type`, `error.para
 ## 5xx / 502 / 503: kegagalan upstream
 
 - Gateway atau provider upstream sedang tidak tersedia sementara.
-- Ulangi dengan backoff. Periksa [status.sintaks.dev](https://status.sintaks.dev) untuk pengumuman.
+- Ulangi dengan backoff. `GET /healthz` mengembalikan `200` ketika gateway sendiri aktif; `503` pada `/v1/*` berarti provider upstream tidak tersedia.
 - Permintaan yang sudah sampai ke provider tetap dapat membebani usage meski koneksi gagal. Periksa Log Usage & Audit sebelum mengulang.
 
 ## Permintaan streaming yang terputus
