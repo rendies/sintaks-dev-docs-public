@@ -1,0 +1,67 @@
+---
+title: Quickstart
+description: Make your first sintaks.dev API call in a few minutes.
+---
+
+`sintaks.dev` is an OpenAI-compatible AI API. You top up an IDR balance, create an API key, and call chat or image endpoints through one gateway.
+
+sintaks.dev is developed by [PT Trakk Digital Indonesia](https://trakk.id/), the company behind [trakk.id](https://trakk.id/).
+
+## 1. Create an account
+
+Sign up at [app.sintaks.dev](https://app.sintaks.dev) and verify your email. An organization is created for you automatically.
+
+## 2. Top up your balance
+
+From the portal, create a top-up order in IDR (minimum Rp10.000) and pay it through iPaymu. QRIS, virtual accounts, and e-wallets are supported. A verified payment adds to your organization balance exactly once.
+
+## 3. Create an API key
+
+In the portal under **API keys**, create a key. The raw key is shown once, store it somewhere safe. Only its SHA-256 hash is kept server-side.
+
+## 4. Call the API
+
+```bash
+curl https://api.sintaks.dev/v1/chat/completions \
+  -H "Authorization: Bearer sk-..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "claude-sonnet-5-5",
+    "messages": [{"role": "user", "content": "Halo"}]
+  }'
+```
+
+Or point an OpenAI-compatible client at the gateway:
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.sintaks.dev/v1",
+    api_key="sk-...",
+)
+resp = client.chat.completions.create(
+    model="claude-sonnet-5-5",
+    messages=[{"role": "user", "content": "Halo"}],
+)
+```
+
+### Embeddings
+
+Create vectors for semantic search with the OpenAI-compatible embeddings
+endpoint:
+
+```python
+embedding = client.embeddings.create(
+    model="qwen3-embedding-0-6b",
+    input=["Serverless Postgres with sintaks.dev"],
+    encoding_format="float",
+)
+print(len(embedding.data[0].embedding))  # 1024
+```
+
+## Next steps
+
+- [Authentication](/guides/authentication/): how API keys and sessions work.
+- [Pricing and balance](/en/guides/pricing/): how reservation and settlement affect your balance.
+- [Errors](/reference/errors/): status codes and error shapes.

@@ -1,0 +1,75 @@
+---
+title: Mulai cepat
+description: Panggil API sintaks.dev pertama Anda dalam beberapa menit.
+---
+
+`sintaks.dev` adalah API AI yang kompatibel dengan OpenAI. Anda dapat
+melakukan top up saldo dalam IDR, membuat API key, kemudian memanggil endpoint
+chat atau image melalui satu gateway.
+
+sintaks.dev dikembangkan oleh [PT Trakk Digital Indonesia](https://trakk.id/), perusahaan teknologi di balik [trakk.id](https://trakk.id/).
+
+## 1. Buat akun
+
+Daftar di [app.sintaks.dev](https://app.sintaks.dev), kemudian verifikasi
+alamat email Anda. Organisasi akan dibuat secara otomatis untuk Anda.
+
+## 2. Top up saldo
+
+Dari portal, buat order top up dalam IDR (minimum Rp10.000), kemudian lakukan
+pembayaran melalui iPaymu. QRIS, virtual account, dan e-wallet didukung.
+Pembayaran yang telah terverifikasi akan menambah saldo organisasi tepat satu
+kali.
+
+## 3. Bikin API key
+
+Di portal, buka **API keys** dan buat key baru. Raw key hanya ditampilkan satu
+kali. Simpan key di tempat yang aman. Server kami hanya menyimpan hash
+SHA-256-nya.
+
+## 4. Panggil API
+
+```bash
+curl https://api.sintaks.dev/v1/chat/completions \
+  -H "Authorization: Bearer sk-..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "claude-sonnet-5-5",
+    "messages": [{"role": "user", "content": "Halo"}]
+  }'
+```
+
+Anda juga dapat mengarahkan client yang kompatibel dengan OpenAI ke gateway:
+
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.sintaks.dev/v1",
+    api_key="sk-...",
+)
+resp = client.chat.completions.create(
+    model="claude-sonnet-5-5",
+    messages=[{"role": "user", "content": "Halo"}],
+)
+```
+
+### Embeddings
+
+Buat vector untuk semantic search melalui endpoint embeddings yang kompatibel
+dengan OpenAI:
+
+```python
+embedding = client.embeddings.create(
+    model="qwen3-embedding-0-6b",
+    input=["Serverless Postgres dengan sintaks.dev"],
+    encoding_format="float",
+)
+print(len(embedding.data[0].embedding))  # 1024
+```
+
+## Selanjutnya
+
+- [Autentikasi](/id/guides/authentication/): cara kerja API key dan sesi.
+- [Harga dan saldo](/id/guides/pricing/): cara reservation dan settlement memengaruhi saldo Anda.
+- [Error](/id/reference/errors/): status code dan bentuk error.

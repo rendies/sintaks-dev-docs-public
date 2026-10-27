@@ -1,0 +1,25 @@
+# sintaks.dev documentation
+
+> Technical reference for the sintaks.dev OpenAI-compatible AI API.
+
+## Start here
+
+- Indonesian quickstart: https://docs.sintaks.dev/id/
+- English quickstart: https://docs.sintaks.dev/en/
+- Authentication: https://docs.sintaks.dev/id/guides/authentication/
+- Pricing and IDR balance: https://docs.sintaks.dev/id/guides/pricing/
+- SDKs and libraries: https://docs.sintaks.dev/id/guides/sdks/
+- API endpoints: https://docs.sintaks.dev/id/reference/endpoints/
+- OpenAPI spec: https://docs.sintaks.dev/openapi.yaml
+- Error reference: https://docs.sintaks.dev/id/reference/errors/
+
+## API
+
+- Base URL: https://api.sintaks.dev/v1
+- Chat: POST /v1/chat/completions
+- Images: POST /v1/images/generations
+- Authentication: Authorization: Bearer <API_KEY>
+
+## Ownership
+
+sintaks.dev is owned and operated by PT Trakk Digital Indonesia, the company behind https://trakk.id/.

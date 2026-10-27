@@ -1,0 +1,142 @@
+/* sintaks.dev custom design tokens for Starlight Docs */
+
+@import "@fontsource-variable/plus-jakarta-sans";
+
+:root {
+  --sl-font-system: "Plus Jakarta Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --sl-font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --sl-color-accent-low: #e8f1fc;
+  --sl-color-accent: #0052be;
+  --sl-color-accent-high: #003680;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #e8f1fc;
+  --sl-color-accent: #0052be;
+  --sl-color-accent-high: #003680;
+  --sl-color-white: #14181f;
+  --sl-color-gray-1: #232a36;
+  --sl-color-gray-2: #414c5e;
+  --sl-color-gray-3: #6b778c;
+  --sl-color-gray-4: #c2c9d6;
+  --sl-color-gray-5: #e4e8f0;
+  --sl-color-gray-6: #f4f6fa;
+  --sl-color-black: #fcfdfe;
+  --sl-color-bg: #fcfdfe;
+  --sl-color-bg-nav: #fcfdfe;
+  --sl-color-bg-sidebar: #f7f9fc;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #102849;
+  --sl-color-accent: #75adff;
+  --sl-color-accent-high: #c3ddff;
+}
+
+/* The brand blue used for light mode is too dark against Starlight's dark
+ * background. Keep content links at WCAG-friendly contrast in dark mode. */
+:root[data-theme='dark'] .sl-markdown-content a,
+:root[data-theme='dark'] .main-pane a {
+  color: #75adff;
+}
+
+:root[data-theme='dark'] .sl-markdown-content a:hover,
+:root[data-theme='dark'] .main-pane a:hover {
+  color: #c3ddff;
+}
+
+/* Explicit font family pairing for body and headings */
+html, body {
+  font-family: "Plus Jakarta Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif !important;
+  text-rendering: optimizeLegibility;
+  color: var(--sl-color-white);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Plus Jakarta Sans Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif !important;
+  letter-spacing: -0.02em;
+}
+
+code, kbd, samp {
+  font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace !important;
+}
+
+/* Developer brand styling in header */
+.site-title {
+  font-weight: 700 !important;
+  letter-spacing: -0.025em;
+  font-size: 1.125rem !important;
+}
+
+/* Sidebar navigation styling: clean, dev-first, subtle active states */
+.sidebar-pane {
+  border-inline-end: 1px solid var(--sl-color-gray-5) !important;
+}
+
+nav.sidebar a[aria-current="page"] {
+  background-color: var(--sl-color-accent-low) !important;
+  color: var(--sl-color-accent) !important;
+  font-weight: 600 !important;
+  border-radius: 4px;
+}
+
+nav.sidebar a:hover:not([aria-current="page"]) {
+  color: var(--sl-color-accent) !important;
+}
+
+/* Code blocks: sleek developer terminal feel */
+pre {
+  border: 1px solid var(--sl-color-gray-5) !important;
+  border-radius: 6px !important;
+  font-size: 0.8125rem !important;
+}
+
+figcaption.header {
+  padding: 0.5rem 1rem !important;
+}
+
+/* Tables in documentation */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th {
+  background-color: var(--sl-color-gray-6);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+td {
+  padding: 0.625rem 1rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Fix screen-reader overflow detection completely */
+:is(.sr-only, span.sr-only, [class*="sr-only"]) {
+  display: inline-block !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
