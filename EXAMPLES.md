@@ -234,6 +234,106 @@ $result = $client->chat()->create([
 echo $result->choices[0]->message->content;
 ```
 
+## C++
+
+Any HTTP library works; the example uses libcurl:
+
+```cpp
+#include <curl/curl.h>
+#include <string>
+
+int main() {
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    CURL* curl = curl_easy_init();
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, "Authorization: Bearer sk-...");
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+
+    const std::string body = R"({
+      "model": "claude-sonnet-5-5",
+      "messages": [{"role": "user", "content": "What is an API gateway?"}]
+    })";
+
+    curl_easy_setopt(curl, CURLOPT_URL, "https://api.sintaks.dev/v1/chat/completions");
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, body.c_str());
+    curl_easy_perform(curl);
+
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+}
+```
+
+## C#
+
+```csharp
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+
+using var client = new HttpClient();
+client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "sk-...");
+
+var payload = """
+{
+  "model": "claude-sonnet-5-5",
+  "messages": [{"role": "user", "content": "What is an API gateway?"}]
+}
+""";
+
+var res = await client.PostAsync("https://api.sintaks.dev/v1/chat/completions",
+    new StringContent(payload, Encoding.UTF8, "application/json"));
+Console.WriteLine(await res.Content.ReadAsStringAsync());
+```
+
+## Rust
+
+```rust
+use reqwest::Client;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = Client::new();
+    let res = client.post("https://api.sintaks.dev/v1/chat/completions")
+        .bearer_auth("sk-...")
+        .json(&serde_json::json!({
+            "model": "claude-sonnet-5-5",
+            "messages": [{"role": "user", "content": "What is an API gateway?"}]
+        }))
+        .send()
+        .await?;
+    println!("{}", res.text().await?);
+    Ok(())
+}
+```
+
+## Dart
+
+```dart
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+final res = await http.post(
+  Uri.parse("https://api.sintaks.dev/v1/chat/completions"),
+  headers: {
+    "Authorization": "Bearer sk-...",
+    "Content-Type": "application/json",
+  },
+  body: jsonEncode({
+    "model": "claude-sonnet-5-5",
+    "messages": [{"role": "user", "content": "What is an API gateway?"}],
+  }),
+);
+print(res.body);
+```
+
+The portal overview page offers a searchable language picker with ready-to-copy
+snippets for every language above (Node.js/TypeScript via `@sintaksdev/sdk`,
+Go via `sintaks-dev-go`, Python, Java, PHP, C++, C#, Rust, Dart, and cURL)
+across chat, embeddings, and image endpoints.
+
 ## Errors
 
 Errors use the OpenAI envelope (`error.message`, `error.type`, `error.code`).
