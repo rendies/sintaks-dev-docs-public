@@ -62,6 +62,7 @@ resp = client.chat.completions.create(
 |---|---|
 | `GET /v1/models` | List active models available through the gateway. |
 | `POST /v1/chat/completions` | Streaming and non-streaming chat completions against the model catalog. Tools and `tool_choice` are supported. |
+| `POST /v1/responses` | OpenAI Responses API — use `client.responses.create` with the OpenAI SDK. |
 | `POST /v1/embeddings` | Embedding vectors for text inputs; billed at the model's input-token rate. |
 | `POST /v1/images/generations` | Image generation; results are hosted and returned as URLs. |
 
@@ -124,7 +125,12 @@ The API is OpenAI-compatible, so existing clients work out of the box:
 
 Copy-paste examples for every endpoint (chat, streaming SSE, embeddings,
 images, error handling) across cURL, TypeScript, JavaScript, Python, Go,
-Java, and PHP live in [EXAMPLES.md](EXAMPLES.md).
+Java, PHP, C++, C#, Rust, and Dart live in [EXAMPLES.md](EXAMPLES.md).
+
+The complete API reference for the official SDKs — every constructor option,
+request parameter, default, return shape, and error member for
+`@sintaksdev/sdk` (TypeScript) and `sintaks-dev-go` (Go) — lives in
+[SDK.md](SDK.md).
 
 Guides for connecting sintaks.dev to agent platforms (Claude Code, Cursor,
 Open WebUI, LiteLLM, Hermes and other OpenAI-compatible agents) and LLM

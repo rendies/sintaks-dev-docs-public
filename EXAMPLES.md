@@ -334,6 +334,29 @@ snippets for every language above (Node.js/TypeScript via `@sintaksdev/sdk`,
 Go via `sintaks-dev-go`, Python, Java, PHP, C++, C#, Rust, Dart, and cURL)
 across chat, embeddings, and image endpoints.
 
+## Responses API
+
+The gateway exposes the OpenAI Responses API at `POST /v1/responses`. Use the
+official OpenAI SDK — just change the base URL:
+
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="https://api.sintaks.dev/v1", api_key="sk-...")
+resp = client.responses.create(model="gpt-5-4", input="What is an API gateway?")
+print(resp.output_text)
+```
+
+```bash
+curl -sS https://api.sintaks.dev/v1/responses \
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "gpt-5-4", "input": "What is an API gateway?"}'
+```
+
+Streaming (`"stream": true`) emits OpenAI Responses SSE events
+(`response.output_text.delta`, `response.completed`).
+
 ## Errors
 
 Errors use the OpenAI envelope (`error.message`, `error.type`, `error.code`).
