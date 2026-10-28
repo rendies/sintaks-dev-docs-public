@@ -120,11 +120,16 @@ The API is OpenAI-compatible, so existing clients work out of the box:
 - **TypeScript / JavaScript**: official package [`@sintaksdev/sdk`](https://www.npmjs.com/package/@sintaksdev/sdk), or the `openai` package with `baseURL: "https://api.sintaks.dev/v1"`.
 - **Python**: `openai` package with `base_url="https://api.sintaks.dev/v1"`.
 - **Go**: official SDK [`github.com/rendies/sintaks-dev-go`](https://github.com/rendies/sintaks-dev-go).
-- **Java / cURL**: see the [examples guide](https://docs.sintaks.dev/en/guides/examples/).
+- **Java / PHP / cURL**: see the [examples guide](https://docs.sintaks.dev/en/guides/examples/).
 
 Copy-paste examples for every endpoint (chat, streaming SSE, embeddings,
-images, error handling, slug and OG-card recipes) live in the
-[documentation](https://docs.sintaks.dev/en/guides/examples/).
+images, error handling) across cURL, TypeScript, JavaScript, Python, Go,
+Java, and PHP live in [EXAMPLES.md](EXAMPLES.md).
+
+Guides for connecting sintaks.dev to agent platforms (Claude Code, Cursor,
+Open WebUI, LiteLLM, Hermes and other OpenAI-compatible agents) and LLM
+gateways (9router, etc.) — including prefixed model IDs like
+`sintaks-prod/claude-sonnet-5` — live in [INTEGRATIONS.md](INTEGRATIONS.md).
 
 ## Documentation
 
