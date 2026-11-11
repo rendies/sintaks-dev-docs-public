@@ -83,6 +83,16 @@ export default defineConfig({
               translations: { id: "SDK & Library" },
             },
             {
+              label: "SDK Reference",
+              slug: "guides/sdk-reference",
+              translations: { id: "Referensi SDK" },
+            },
+            {
+              label: "Coding agents",
+              slug: "guides/coding-agents",
+              translations: { id: "Coding agent" },
+            },
+            {
               label: "Examples",
               slug: "guides/examples",
               translations: { id: "Contoh" },
