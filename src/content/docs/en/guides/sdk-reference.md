@@ -80,6 +80,23 @@ Return: `{ created, data: [{ url }] }` (hosted URLs).
 
 Returns `{ object: "list", data: [{ id, object, created, owned_by }] }`.
 
+### `responses.create`
+
+`ResponseCreateParams`:
+
+| Field | Type | Notes |
+|---|---|---|
+| `model` | `string` | Default `gpt-5-5`. Any active catalog model. |
+| `input` | `string` | **required** — the input text. |
+| `instructions` | `string` | Optional instructions to guide the model's behavior. |
+| `max_output_tokens` | `number` | Optional limit on the number of output tokens. |
+| `temperature` | `number` | Optional sampling temperature. |
+| `top_p` | `number` | Optional nucleus sampling parameter. |
+
+Return: `{ id, object, created, model, choices, usage }`.
+
+### `embeddings.create`
+
 ### Errors
 
 All failures throw `SintaksError`: `status`, `type`, `code`, `requestId`

@@ -5,8 +5,14 @@ description: User-facing changes to the sintaks.dev API and documentation.
 
 ## 2026-10-27
 
-- **`POST /v1/embeddings`** — OpenAI-compatible embeddings for text inputs, billed at the model's input-token rate. `input` accepts a string or an array of strings; `encoding_format: "float"` and `dimensions` are supported. See the [examples](/en/guides/examples/).
+- **`POST /v1/responses`** — Decision/response endpoint compatible with the OpenAI Responses API. Accepts `model`, `input`, `instructions`, `max_output_tokens`, `temperature`, and `top_p`. Returns `id`, `object`, `created`, `model`, `choices`, and `usage`. See the [sdk-reference](/en/guides/sdk-reference/) for TypeScript and Go SDK usage.
+- **`POST /v1/images/generations`** — (existing) Image generation; results are hosted and returned as URLs.
 - Documentation reorganized: new [Examples](/en/guides/examples/) and [Troubleshooting](/en/guides/troubleshooting/) guides, and the quickstart now matches the shipped API surface.
+
+## 2026-10-13
+
+- **Image generation** — `POST /v1/images/generations` is served through the production provider and billed at the model's token rates. Results are hosted and returned as URLs; `response_format: "b64_json"` is rejected.
+- **Model catalog** — `GET /v1/models` returns the active catalog; chat models resolve against the catalog and unknown models return `400`.
 
 ## 2026-10-13
 

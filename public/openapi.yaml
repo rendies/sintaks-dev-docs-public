@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: sintaks.dev API
-  version: 0.2.0
-  description: OpenAI-compatible chat, embeddings, and image generation API for sintaks.dev.
+  version: 0.3.0
+  description: OpenAI-compatible chat, embeddings, image generation, and responses API for sintaks.dev.
   license:
     name: Proprietary
 servers:
@@ -124,6 +124,80 @@ paths:
           $ref: '#/components/responses/InsufficientBalance'
         '503':
           $ref: '#/components/responses/UpstreamUnavailable'
+/v1/responses:
+    post:
+      tags: [Responses]
+      summary: Create a response (decision endpoint)
+      operationId: createResponse
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResponseRequest'
+            example:
+              model: gpt-5-5
+              input: What is the capital of Indonesia?
+              instructions: You are a helpful assistant.
+      responses:
+        '200':
+          description: Response result with output and usage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '402':
+          $ref: '#/components/responses/InsufficientBalance'
+        '503':
+          $ref: '#/components/responses/UpstreamUnavailable'
+components:
+  schemas:
+    ResponseRequest:
+      type: object
+      required: [model, input]
+      properties:
+        model:
+          type: string
+        input:
+          type: string
+        instructions:
+          type: string
+        max_output_tokens:
+          type: integer
+          minimum: 1
+        temperature:
+          type: number
+        top_p:
+          type: number
+    ResponseResponse:
+      type: object
+      required: [id, object, created, model, choices, usage]
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        created:
+          type: integer
+        model:
+          type: string
+        choices:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              message:
+                type: string
+        usage:
+          $ref: '#/components/schemas/Usage'
 components:
   securitySchemes:
     bearerAuth:

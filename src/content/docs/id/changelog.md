@@ -5,7 +5,8 @@ description: Perubahan API dan dokumentasi sintaks.dev yang terlihat oleh penggu
 
 ## 2026-10-27
 
-- **`POST /v1/embeddings`** — embeddings untuk input teks yang kompatibel dengan OpenAI, ditagih dengan tarif token input model. `input` menerima string atau array string; `encoding_format: "float"` dan `dimensions` didukung. Lihat [contoh](/id/guides/examples/).
+- **`POST /v1/responses`** — endpoint keputusan/respons yang kompatibel dengan OpenAI Responses API. Menerima `model`, `input`, `instructions`, `max_output_tokens`, `temperature`, dan `top_p`. Mengembalikan `id`, `object`, `created`, `model`, `choices`, dan `usage`. Lihat [sdk-reference](/id/guides/sdk-reference/) untuk penggunaan SDK TypeScript dan Go.
+- **`POST /v1/images/generations`** — (existing) Generate image; hasil di-host dan dikembalikan sebagai URL.
 - Dokumentasi ditata ulang: panduan [Contoh](/id/guides/examples/) dan [Pemecahan masalah](/id/guides/troubleshooting/) baru, dan quickstart kini sesuai dengan permukaan API yang dirilis.
 
 ## 2026-10-13

@@ -14,5 +14,6 @@ Autentikasi menggunakan `Authorization: Bearer <api key>`. Unduh
 | `POST /v1/chat/completions` | Chat completion streaming dan non-streaming dari katalog model. |
 | `POST /v1/embeddings` | Vector embedding untuk input teks; ditagih dengan tarif token input model. |
 | `POST /v1/images/generations` | Generate image; hasil di-host dan dikembalikan sebagai URL. |
+| `POST /v1/responses` | Pembuatan keputusan/respons; kompatibel dengan OpenAI Responses API. |
 
 Pengelolaan akun, API key, saldo, usage, dan top up tersedia di portal customer.
