@@ -14,5 +14,6 @@ Authenticate with `Authorization: Bearer <api key>`. Download the [OpenAPI spec]
 | `POST /v1/embeddings` | Embedding vectors for text inputs; billed at the model's input-token rate. |
 | `POST /v1/images/generations` | Image generation; results are hosted and returned as URLs. |
 | `POST /v1/responses` | Decision/response generation; compatible with OpenAI Responses API. |
+| `POST /v1/messages` | Streaming and non-streaming messages; compatible with the Anthropic Messages API. |
 
 Account, API-key, balance, usage, and top-up management are available in the customer portal.
