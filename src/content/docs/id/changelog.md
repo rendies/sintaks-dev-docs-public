@@ -3,6 +3,10 @@ title: Riwayat perubahan
 description: Perubahan API dan dokumentasi sintaks.dev yang terlihat oleh pengguna.
 ---
 
+## 2026-11-19
+
+- **`POST /v1/messages`** — endpoint kompatibel Anthropic Messages API. Pakai dari Claude Code (`ANTHROPIC_BASE_URL=https://api.sintaks.dev/v1`), SDK Anthropic, atau klien kompatibel Anthropic apa pun. Mendukung `system` (string atau blok teks), streaming (event `content_block_*`), `tools` / `tool_choice`, input gambar, dan `stop_sequences`. Lihat panduan [Claude Code](/id/guides/claude-code/).
+
 ## 2026-10-27
 
 - **`POST /v1/responses`** — endpoint keputusan/respons yang kompatibel dengan OpenAI Responses API. Menerima `model`, `input`, `instructions`, `max_output_tokens`, `temperature`, dan `top_p`. Mengembalikan `id`, `object`, `created`, `model`, `choices`, dan `usage`. Lihat [sdk-reference](/id/guides/sdk-reference/) untuk penggunaan SDK TypeScript dan Go.

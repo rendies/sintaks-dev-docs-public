@@ -93,6 +93,10 @@ export default defineConfig({
               translations: { id: "Coding agent" },
             },
             {
+              label: "Claude Code",
+              slug: "guides/claude-code",
+            },
+            {
               label: "VS Code",
               slug: "guides/vscode",
             },

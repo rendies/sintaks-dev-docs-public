@@ -3,6 +3,10 @@ title: Changelog
 description: User-facing changes to the sintaks.dev API and documentation.
 ---
 
+## 2026-11-19
+
+- **`POST /v1/messages`** — Anthropic Messages API-compatible endpoint. Use it from Claude Code (`ANTHROPIC_BASE_URL=https://api.sintaks.dev/v1`), the Anthropic SDKs, or any Anthropic-compatible client. Supports `system` (string or text blocks), streaming (`content_block_*` events), `tools` / `tool_choice`, image input, and `stop_sequences`. See the [Claude Code guide](/en/guides/claude-code/).
+
 ## 2026-10-27
 
 - **`POST /v1/responses`** — Decision/response endpoint compatible with the OpenAI Responses API. Accepts `model`, `input`, `instructions`, `max_output_tokens`, `temperature`, and `top_p`. Returns `id`, `object`, `created`, `model`, `choices`, and `usage`. See the [sdk-reference](/en/guides/sdk-reference/) for TypeScript and Go SDK usage.
