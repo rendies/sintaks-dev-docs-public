@@ -101,8 +101,27 @@ curl -sS https://api.sintaks.dev/v1/images/generations \
 
 - `size` berupa `WIDTHxHEIGHT` atau `auto`. Gunakan ukuran yang didukung model (misalnya `1024x1024`); ukuran yang tidak didukung gagal di upstream dan di-refund.
 - `n` menjalankan `n` panggilan model paralel; Anda menerima dan membayar hanya image yang kembali.
-- `response_format` harus `"url"` atau dihilangkan; `"b64_json"` mengembalikan `400` — image selalu berupa URL yang di-host.
+- `response_format` adalah `"url"` secara default (URL di-host) atau `"b64_json"` untuk byte image mentah.
 - Image generation ditagih dengan tarif token model; lihat [harga](/id/guides/pricing/) dan katalog model di portal.
+
+### Edit image
+
+`POST /v1/images/edits` adalah endpoint multipart yang kompatibel dengan OpenAI (img2img/inpainting) pada model `image_capable`:
+
+```bash
+curl -sS https://api.sintaks.dev/v1/images/edits \
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \
+  -F "image=@input.png" \
+  -F "prompt=Tambahkan air mancur cokelat di sisi kanan" \
+  -F "model=gpt-image-1" \
+  -F "n=1" \
+  -F "size=1024x1024"
+```
+
+- `image` (wajib) adalah satu atau lebih image sumber; `mask` opsional untuk inpainting. `prompt` wajib.
+- `model`, `n`, `size`, serta (jika didukung model) `quality`, `style`, `background` sama seperti endpoint generations.
+- `response_format` adalah `"url"` secara default (URL di-host) atau `"b64_json"` untuk byte image mentah.
+- Edit image ditagih dengan tarif token model; lihat [harga](/id/guides/pricing/) dan katalog model di portal.
 
 ### Error
 

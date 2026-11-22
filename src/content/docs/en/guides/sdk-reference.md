@@ -35,6 +35,7 @@ const client = new Sintaks(options);
 | `client.chat.completions` | `create(params)` | `POST /v1/chat/completions` |
 | `client.embeddings` | `create(params)` | `POST /v1/embeddings` |
 | `client.images` | `generate(params)` | `POST /v1/images/generations` |
+| `client.images` | `edits(params)` | `POST /v1/images/edits` (multipart) |
 | `client.models` | `list()` | `GET /v1/models` |
 
 ### `chat.completions.create`
@@ -129,6 +130,7 @@ client := sintaksdev.New("sk-...", opts...)
 | `ChatCompletion(ctx, ChatRequest) (*ChatResponse, error)` | `POST /v1/chat/completions` |
 | `ChatCompletionStream(ctx, ChatRequest) (*ChatStream, error)` | `POST /v1/chat/completions` (SSE) |
 | `GenerateImage(ctx, ImageRequest) (*ImageResponse, error)` | `POST /v1/images/generations` |
+| `EditImage(ctx, ImageEditRequest) (*ImageResponse, error)` | `POST /v1/images/edits` (multipart) |
 | `Response(ctx, ResponseRequest) (*ResponseResult, error)` | `POST /v1/responses` |
 | `Embedding(ctx, EmbeddingRequest) (*EmbeddingResponse, error)` | `POST /v1/embeddings` |
 

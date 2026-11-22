@@ -101,8 +101,27 @@ curl -sS https://api.sintaks.dev/v1/images/generations \
 
 - `size` is `WIDTHxHEIGHT` or `auto`. Use a size the model supports (for example `1024x1024`); unsupported sizes fail upstream and are refunded.
 - `n` runs `n` parallel model calls; you receive and pay for only the images that came back.
-- `response_format` must be `"url"` or omitted; `"b64_json"` returns `400` — images are always hosted URLs.
+- `response_format` is `"url"` by default (hosted URL) or `"b64_json"` for raw image bytes.
 - Image generation is billed with the model's token rates; see [pricing](/en/guides/pricing/) and the portal model catalog.
+
+### Image edits
+
+`POST /v1/images/edits` is an OpenAI-compatible multipart endpoint (img2img/inpainting) on `image_capable` models:
+
+```bash
+curl -sS https://api.sintaks.dev/v1/images/edits \
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \
+  -F "image=@input.png" \
+  -F "prompt=Add a chocolate fountain to the right side" \
+  -F "model=gpt-image-1" \
+  -F "n=1" \
+  -F "size=1024x1024"
+```
+
+- `image` (required) is one or more source images; `mask` is optional for inpainting. `prompt` is required.
+- `model`, `n`, `size`, and (where the model supports them) `quality`, `style`, `background` mirror the generations endpoint.
+- `response_format` is `"url"` by default (hosted URL) or `"b64_json"` for raw image bytes.
+- Edits are billed with the model's token rates; see [pricing](/en/guides/pricing/) and the portal model catalog.
 
 ### Errors
 
