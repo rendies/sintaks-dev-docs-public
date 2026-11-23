@@ -357,6 +357,42 @@ curl -sS https://api.sintaks.dev/v1/responses \
 Streaming (`"stream": true`) emits OpenAI Responses SSE events
 (`response.output_text.delta`, `response.completed`).
 
+## Videos API
+
+Video generation is asynchronous: submit a job, poll it, then fetch the
+completed clip.
+
+```bash
+# 1. Submit
+curl -sS https://api.sintaks.dev/v1/videos \
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model": "google/veo-3.1-lite-generate-001", "prompt": "a cat on a beach", "seconds": 4}'
+# → {"id":"vid_...","object":"video","created_at":...,"status":"queued","model":"google/veo-3.1-lite-generate-001"}
+
+# 2. Poll until completed
+curl -sS https://api.sintaks.dev/v1/videos/vid_... -H "Authorization: Bearer $SINTAKS_API_KEY"
+# → {"id":"vid_...","status":"completed","url":"https://<provider cdn>/....mp4",...}
+
+# 3. Fetch the clip (302 redirect to the provider CDN)
+curl -L https://api.sintaks.dev/v1/videos/vid_.../content -H "Authorization: Bearer $SINTAKS_API_KEY" -o clip.mp4
+```
+
+Node.js (official OpenAI SDK, base URL swap):
+
+```ts
+import OpenAI from "openai";
+const client = new OpenAI({ baseURL: "https://api.sintaks.dev/v1", apiKey: "sk-..." });
+const job = await client.videos.create({ model: "google/veo-3.1-lite-generate-001", prompt: "a cat" });
+let status = job.status;
+while (status === "queued" || status === "in_progress") {
+  await new Promise((r) => setTimeout(r, 5000));
+  status = (await client.videos.retrieve(job.id)).status;
+}
+const video = await client.videos.retrieve(job.id);
+console.log(video.url); // provider CDN URL
+```
+
 ## Errors
 
 Errors use the OpenAI envelope (`error.message`, `error.type`, `error.code`).

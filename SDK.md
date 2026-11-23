@@ -35,6 +35,7 @@ const client = new Sintaks(options);
 |---|---|---|
 | `client.chat.completions` | `create(params)` | `POST /v1/chat/completions` |
 | `client.responses` | `create(params)` | `POST /v1/responses` |
+| `client.videos` | `create(params)` · `retrieve(id)` | `POST /v1/videos` · `GET /v1/videos/{id}` |
 | `client.embeddings` | `create(params)` | `POST /v1/embeddings` |
 | `client.images` | `generate(params)` | `POST /v1/images/generations` |
 | `client.models` | `list()` | `GET /v1/models` |
@@ -73,6 +74,15 @@ Return: `ChatCompletion` (`id`, `created`, `model`, `choices[].message.content`,
 | *(any other key)* | `unknown` | Forwarded verbatim (e.g. `tools`, `tool_choice`). |
 
 Return: `ResponsesObject` — `{ id, object: "response", status, model, output, usage }`.
+
+### `videos.create` / `videos.retrieve`
+
+`VideoCreateParams`: `model` (required), `prompt` (required), `seconds`
+(1–20, default 4), `size`, `aspect_ratio`, `audio`.
+
+`client.videos.create(params)` → `VideoObject` with
+`status: "queued" | "in_progress" | "completed" | "failed"`; completed jobs
+carry the provider CDN URL in `url`. `client.videos.retrieve(id)` polls it.
 
 ### `embeddings.create`
 
@@ -151,6 +161,8 @@ client := sintaksdev.New("sk-...", opts...)
 | `GenerateImage(ctx, ImageRequest) (*ImageResponse, error)` | `POST /v1/images/generations` |
 | `Response(ctx, ResponseRequest) (*ResponseResult, error)` | `POST /v1/responses` |
 | `Embedding(ctx, EmbeddingRequest) (*EmbeddingResponse, error)` | `POST /v1/embeddings` |
+| `CreateVideo(ctx, VideoRequest) (*VideoJob, error)` | `POST /v1/videos` |
+| `GetVideo(ctx, id) (*VideoJob, error)` | `GET /v1/videos/{id}` |
 
 ### `ChatRequest`
 
@@ -183,6 +195,23 @@ sintaksdev.ResponseRequest{
 ```
 
 `ResponseResult`: `Output` (raw JSON), `Usage`, `RequestID`.
+
+### `VideoRequest` / `VideoJob`
+
+```go
+sintaksdev.VideoRequest{
+    Model:  "google/veo-3.1-lite-generate-001", // required
+    Prompt: "a cat on a beach",
+    Seconds: sintaksdev.Ptr(4), // 1–20, default 4
+    Size:    "720p",
+    AspectRatio: "16:9",
+    Audio:   false,
+}
+```
+
+`CreateVideo` returns a `VideoJob` (`id`, `status: queued`); poll it with
+`GetVideo` until `status == "completed"` (the job then carries the provider
+CDN URL in `URL`) or `"failed"`.
 
 ### `EmbeddingRequest`
 

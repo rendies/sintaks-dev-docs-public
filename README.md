@@ -64,7 +64,10 @@ resp = client.chat.completions.create(
 | `POST /v1/chat/completions` | Streaming and non-streaming chat completions against the model catalog. Tools and `tool_choice` are supported. |
 | `POST /v1/responses` | OpenAI Responses API — use `client.responses.create` with the OpenAI SDK. |
 | `POST /v1/embeddings` | Embedding vectors for text inputs; billed at the model's input-token rate. |
-| `POST /v1/images/generations` | Image generation; results are hosted and returned as URLs. |
+| `POST /v1/images/generations` | Image generation; the provider CDN URL is returned in `url` mode, raw bytes in `b64_json` mode. |
+| `POST /v1/videos` | Submit an async video generation job (`{id, status: "queued"}`). |
+| `GET /v1/videos/{id}` | Poll the job until `completed` (provider CDN URL) or `failed`. |
+| `GET /v1/videos/{id}/content` | Redirect to the completed video. |
 
 ## Authentication
 
