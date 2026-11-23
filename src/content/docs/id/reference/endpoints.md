@@ -1,20 +1,21 @@
 ---
-title: Endpoint
+title: Referensi API
 description: Endpoint publik gateway sintaks.dev.
 ---
 
-## Gateway: `https://api.sintaks.dev`
+Gateway berada di `https://api.sintaks.dev`. Autentikasi menggunakan `Authorization: Bearer <api key>`. Unduh [OpenAPI spec](/openapi.yaml) untuk digunakan pada tooling Anda.
 
-Autentikasi menggunakan `Authorization: Bearer <api key>`. Unduh
-[OpenAPI spec](/openapi.yaml) untuk digunakan pada tooling Anda.
+Setiap endpoint memiliki halaman sendiri dengan referensi lengkap field request dan response:
 
-| Endpoint | Fungsi |
+| Endpoint | Halaman |
 |---|---|
-| `GET /v1/models` | Daftar model aktif yang tersedia melalui gateway. |
-| `POST /v1/chat/completions` | Chat completion streaming dan non-streaming dari katalog model. |
-| `POST /v1/embeddings` | Vector embedding untuk input teks; ditagih dengan tarif token input model. |
-| `POST /v1/images/generations` | Generate image; hasil di-host dan dikembalikan sebagai URL. |
-| `POST /v1/images/edits` | Edit image (img2img/inpainting); hasil di-host dan dikembalikan sebagai URL. |
-| `POST /v1/responses` | Pembuatan keputusan/respons; kompatibel dengan OpenAI Responses API. |
+| `GET /v1/models` | [Daftar model](./models) |
+| `POST /v1/chat/completions` | [Chat completions](./chat-completions) |
+| `POST /v1/embeddings` | [Embeddings](./embeddings) |
+| `POST /v1/images/generations` | [Generate image](./images-generations) |
+| `POST /v1/images/edits` | [Edit image](./images-edits) |
+| `POST /v1/responses` | [Responses](./responses) |
+| `POST /v1/decisions` | [Decisions](./decisions) |
+| `POST /v1/messages` | [Messages](./messages) |
 
 Pengelolaan akun, API key, saldo, usage, dan top up tersedia di portal customer.

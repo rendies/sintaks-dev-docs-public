@@ -85,9 +85,9 @@ export default defineConfig({
               translations: { id: "Harga dan saldo" },
             },
             {
-              label: "Top-ups with iPaymu",
+              label: "Top up your balance",
               slug: "guides/top-ups",
-              translations: { id: "Top up lewat iPaymu" },
+              translations: { id: "Top up saldo" },
             },
           ],
         },
@@ -104,6 +104,16 @@ export default defineConfig({
               label: "SDKs & Libraries",
               slug: "guides/sdks",
               translations: { id: "SDK & Library" },
+            },
+            {
+              label: "TypeScript/JavaScript SDK",
+              slug: "guides/sdk-javascript",
+              translations: { id: "SDK TypeScript/JavaScript" },
+            },
+            {
+              label: "Go SDK",
+              slug: "guides/sdk-go",
+              translations: { id: "SDK Go" },
             },
             {
               label: "SDK Reference",
@@ -128,8 +138,22 @@ export default defineConfig({
           items: [
             {
               label: "Coding agents",
-              slug: "guides/coding-agents",
               translations: { id: "Coding agent" },
+              items: [
+                {
+                  label: "Overview",
+                  slug: "guides/coding-agents",
+                  translations: { id: "Ringkasan" },
+                },
+                {
+                  label: "OpenCode",
+                  slug: "guides/coding-agents/opencode",
+                },
+                {
+                  label: "Hermes",
+                  slug: "guides/coding-agents/hermes",
+                },
+              ],
             },
             {
               label: "Claude Code",
@@ -146,9 +170,49 @@ export default defineConfig({
           translations: { id: "Referensi API" },
           items: [
             {
-              label: "Endpoints",
+              label: "Overview",
               slug: "reference/endpoints",
-              translations: { id: "Endpoint" },
+              translations: { id: "Ringkasan" },
+            },
+            {
+              label: "List models",
+              slug: "reference/models",
+              translations: { id: "Daftar model" },
+            },
+            {
+              label: "Chat completions",
+              slug: "reference/chat-completions",
+              translations: { id: "Chat completions" },
+            },
+            {
+              label: "Embeddings",
+              slug: "reference/embeddings",
+              translations: { id: "Embeddings" },
+            },
+            {
+              label: "Image generation",
+              slug: "reference/images-generations",
+              translations: { id: "Generate image" },
+            },
+            {
+              label: "Image edits",
+              slug: "reference/images-edits",
+              translations: { id: "Edit image" },
+            },
+            {
+              label: "Responses",
+              slug: "reference/responses",
+              translations: { id: "Responses" },
+            },
+            {
+              label: "Decisions",
+              slug: "reference/decisions",
+              translations: { id: "Decisions" },
+            },
+            {
+              label: "Messages",
+              slug: "reference/messages",
+              translations: { id: "Messages" },
             },
             { label: "Errors", slug: "reference/errors", translations: { id: "Error" } },
           ],

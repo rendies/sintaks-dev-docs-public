@@ -1,20 +1,21 @@
 ---
-title: Endpoints
+title: API reference
 description: Public sintaks.dev gateway endpoints.
 ---
 
-## Gateway: `https://api.sintaks.dev`
+The gateway lives at `https://api.sintaks.dev`. Authenticate with `Authorization: Bearer <api key>`. Download the [OpenAPI spec](/openapi.yaml) for your tooling.
 
-Authenticate with `Authorization: Bearer <api key>`. Download the [OpenAPI spec](/openapi.yaml) for your tooling.
+Each endpoint has its own page with full request and response field references:
 
-| Endpoint | Purpose |
+| Endpoint | Page |
 |---|---|
-| `GET /v1/models` | List active models available through the gateway. |
-| `POST /v1/chat/completions` | Streaming and non-streaming chat completions against the model catalog. |
-| `POST /v1/embeddings` | Embedding vectors for text inputs; billed at the model's input-token rate. |
-| `POST /v1/images/generations` | Image generation; results are hosted and returned as URLs. |
-| `POST /v1/images/edits` | Image-to-image edits (img2img/inpainting); results are hosted and returned as URLs. |
-| `POST /v1/responses` | Decision/response generation; compatible with OpenAI Responses API. |
-| `POST /v1/messages` | Streaming and non-streaming messages; compatible with the Anthropic Messages API. |
+| `GET /v1/models` | [List models](./models) |
+| `POST /v1/chat/completions` | [Chat completions](./chat-completions) |
+| `POST /v1/embeddings` | [Embeddings](./embeddings) |
+| `POST /v1/images/generations` | [Image generation](./images-generations) |
+| `POST /v1/images/edits` | [Image edits](./images-edits) |
+| `POST /v1/responses` | [Responses](./responses) |
+| `POST /v1/decisions` | [Decisions](./decisions) |
+| `POST /v1/messages` | [Messages](./messages) |
 
 Account, API-key, balance, usage, and top-up management are available in the customer portal.
