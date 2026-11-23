@@ -1,0 +1,151 @@
+---
+import {
+  allModels,
+  catalogUpdated,
+  formatContext,
+  formatIdr,
+  getKinds,
+  getProviders,
+  getReleaseDate,
+  isFreeModel,
+  modelDetailHref,
+  t,
+  type Locale,
+} from "../../lib/models";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const L = (key: Parameters<typeof t>[1]) => t(lang, key);
+
+const providers = getProviders();
+const kinds = getKinds();
+const sortedModels = [...allModels].sort((a, b) => a.id.localeCompare(b.id));
+---
+
+<div>
+  <p>
+    {L("models.sub").replace("{count}", String(allModels.length))}{" "}
+    <em>(updated {catalogUpdated})</em>
+  </p>
+
+  <details>
+    <summary>{L("models.search")}</summary>
+    <div class="models-filter">
+      <label>
+        <input type="search" data-model-search placeholder={L("models.search")} />
+      </label>
+      <label>
+        <select data-model-provider>
+          <option value="">{L("models.provider.all")}</option>
+          {providers.map((p) => (
+            <option value={p}>{p}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <select data-model-kind>
+          <option value="">{L("models.type.all")}</option>
+          {kinds.map((k) => (
+            <option value={k}>{k}</option>
+          ))}
+        </select>
+      </label>
+      <label class="models-free">
+        <input type="checkbox" data-model-free />
+        <span>{L("models.freeOnly")}</span>
+      </label>
+    </div>
+  </details>
+
+  <table class="models-table">
+    <thead>
+      <tr>
+        <th>{L("models.th.model")}</th>
+        <th>{L("models.th.provider")}</th>
+        <th>{L("models.th.type")}</th>
+        <th>{L("models.th.release")}</th>
+        <th>{L("models.th.context")}</th>
+        <th class="r">{L("models.th.input")}</th>
+        <th class="r">{L("models.th.output")}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {sortedModels.map((m, i) => {
+        const free = isFreeModel(m);
+        const release = getReleaseDate(m);
+        const kind = m.image_capable && m.kind !== "image" ? `${m.kind} / image` : m.kind;
+        return (
+          <tr data-model={m.id} data-provider={m.provider} data-kind={kind} data-free={free ? "1" : "0"} data-idx={i}>
+            <td>
+              <a href={modelDetailHref(lang, m)} class="model-link">{m.id}</a>
+            </td>
+            <td>{m.provider}</td>
+            <td>{kind}</td>
+            <td>{release || "-"}</td>
+            <td>{formatContext(m.context)}</td>
+            <td class="r">{free ? "Rp0" : formatIdr(m.input_idr, lang)}</td>
+            <td class="r">{formatIdr(m.output_idr, lang)}</td>
+          </tr>
+        );
+      })}
+      <tr data-model-empty class="hidden">
+        <td colspan="7">{L("models.empty")}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <style>
+    .models-filter { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 0.75rem 0; }
+    .models-filter label { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .models-filter input[type="search"], .models-filter select { padding: 0.3rem 0.5rem; }
+    .models-free { font-size: 0.9rem; }
+    .models-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .models-table th, .models-table td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--sl-color-gray-5); text-align: left; }
+    .models-table th { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .models-table td.r, .models-table th.r { text-align: right; }
+    .model-link { font-family: var(--sl-font-mono); font-weight: 600; }
+    .hidden { display: none; }
+  </style>
+
+  <script define:vars={{ searchLabel: L("models.empty") }}>
+    const table = document.querySelector(".models-table");
+    if (!table) return;
+    const tbody = table.querySelector("tbody");
+    const rows = [...tbody.querySelectorAll("tr[data-model]")];
+    const emptyRow = tbody.querySelector("[data-model-empty]");
+    const searchInput = document.querySelector("[data-model-search]");
+    const providerSelect = document.querySelector("[data-model-provider]");
+    const kindSelect = document.querySelector("[data-model-kind]");
+    const freeCheckbox = document.querySelector("[data-model-free]");
+
+    const apply = () => {
+      const q = (searchInput?.value || "").trim().toLowerCase();
+      const provider = providerSelect?.value || "";
+      const kind = kindSelect?.value || "";
+      const onlyFree = Boolean(freeCheckbox?.checked);
+      let visible = 0;
+      rows.forEach((row) => {
+        const show =
+          (!onlyFree || row.dataset.free === "1") &&
+          (!provider || row.dataset.provider === provider) &&
+          (!kind || (row.dataset.kind || "").includes(kind)) &&
+          (!q || (row.dataset.model || "").toLowerCase().includes(q) || (row.dataset.provider || "").toLowerCase().includes(q));
+        row.classList.toggle("hidden", !show);
+        if (show) visible += 1;
+      });
+      if (emptyRow) {
+        emptyRow.classList.toggle("hidden", visible > 0);
+        emptyRow.children[0].textContent =
+          visible > 0 ? "" : `${searchLabel}`;
+      }
+    };
+
+    searchInput?.addEventListener("input", apply);
+    providerSelect?.addEventListener("change", apply);
+    kindSelect?.addEventListener("change", apply);
+    freeCheckbox?.addEventListener("change", apply);
+    apply();
+  </script>
+</div>

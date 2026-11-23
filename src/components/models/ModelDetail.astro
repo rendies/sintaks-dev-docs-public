@@ -1,0 +1,396 @@
+---
+import {
+  formatContext,
+  formatIdr,
+  getModelDetail,
+  getReleaseDate,
+  isFreeModel,
+  t,
+  type Locale,
+  type PricingModel,
+} from "../../lib/models";
+import { modelDetailHref } from "../../lib/models";
+
+interface Props {
+  lang: Locale;
+  model: PricingModel;
+}
+
+const { lang, model } = Astro.props;
+const L = (key: Parameters<typeof t>[1]) => t(lang, key);
+
+const detail = getModelDetail(model);
+const free = isFreeModel(model);
+const releaseDate = getReleaseDate(model);
+const displayName = detail?.name || model.name || model.id;
+const contextTokens = detail?.limit?.context || model.context;
+const maxOutputTokens = detail?.limit?.output || 0;
+
+const capabilities: string[] = [];
+if (detail?.tool_call ?? model.tool_capable) capabilities.push(L("models.detail.toolCall"));
+if (detail?.reasoning ?? model.reasoning_capable) capabilities.push(L("models.detail.reasoning"));
+if (detail?.structured_output ?? model.structured_output_capable) capabilities.push(L("models.detail.structured"));
+if (detail?.temperature) capabilities.push(L("models.detail.temperature"));
+if (detail?.attachment) capabilities.push(L("models.detail.attachment"));
+if (model.image_capable) capabilities.push(L("models.type.image"));
+if (model.embedding_capable) capabilities.push(L("models.type.embedding"));
+if (model.responses_capable) capabilities.push(L("models.detail.responses"));
+
+const inputModalities = detail?.modalities?.input ?? [];
+const outputModalities = detail?.modalities?.output ?? [];
+
+const isEmbedding = model.kind === "embedding";
+const isImage = model.kind === "image";
+const isDecision = model.kind === "decision";
+
+const nodeSnippet = isEmbedding
+  ? `import { Sintaks } from "@sintaksdev/sdk";
+
+const client = new Sintaks({ apiKey: process.env.SINTAKS_API_KEY });
+
+const res = await client.embeddings.create({
+  model: "${model.id}",
+  input: ["Semantic search with sintaks.dev"],
+});
+console.log(res.data[0]?.embedding.length);`
+  : isImage
+  ? `import { Sintaks } from "@sintaksdev/sdk";
+
+const client = new Sintaks({ apiKey: process.env.SINTAKS_API_KEY });
+
+const images = await client.images.generate({
+  model: "${model.id}",
+  prompt: "A minimalist Jakarta tech workspace at sunrise",
+});
+console.log(images.data[0]?.url);`
+  : isDecision
+  ? `import { Sintaks } from "@sintaksdev/sdk";
+
+const client = new Sintaks({ apiKey: process.env.SINTAKS_API_KEY });
+
+const decision = await client.decisions.create({
+  model: "${model.id}",
+  input: "The package arrived broken. I want my money back.",
+  questions: [
+    { type: "predicate", name: "refund", instructions: "Is the customer asking for a refund?" }
+  ],
+});
+console.log(decision.answers);`
+  : `import { Sintaks } from "@sintaksdev/sdk";
+
+const client = new Sintaks({ apiKey: process.env.SINTAKS_API_KEY });
+
+const resp = await client.chat.completions.create({
+  model: "${model.id}",
+  messages: [{ role: "user", content: "Hello from sintaks.dev!" }],
+});
+console.log(resp.choices[0]?.message.content);`;
+
+const goSnippet = isEmbedding
+  ? `package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
+
+    sintaksdev "github.com/rendies/sintaks-dev-go"
+)
+
+func main() {
+    client := sintaksdev.New(os.Getenv("SINTAKS_API_KEY"))
+    res, err := client.Embedding(context.Background(), sintaksdev.EmbeddingRequest{
+        Model: "${model.id}",
+        Input: []string{"Semantic search with sintaks.dev"},
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(len(res.Data[0].Embedding))
+}`
+  : isDecision
+  ? `package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "net/http"
+    "os"
+)
+
+func main() {
+    body, _ := json.Marshal(map[string]any{
+        "model": "${model.id}",
+        "input": "The package arrived broken. I want my money back.",
+        "questions": []map[string]any{
+            {"type": "predicate", "name": "refund", "instructions": "Is the customer asking for a refund?"},
+        },
+    })
+    req, _ := http.NewRequest("POST", "https://api.sintaks.dev/v1/decisions", bytes.NewReader(body))
+    req.Header.Set("Authorization", "Bearer "+os.Getenv("SINTAKS_API_KEY"))
+    req.Header.Set("Content-Type", "application/json")
+    resp, err := http.DefaultClient.Do(req)
+    if err != nil {
+        panic(err)
+    }
+    defer resp.Body.Close()
+    fmt.Println(resp.Status)
+}`
+  : `package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
+
+    sintaksdev "github.com/rendies/sintaks-dev-go"
+)
+
+func main() {
+    client := sintaksdev.New(os.Getenv("SINTAKS_API_KEY"))
+    resp, err := client.ChatCompletion(context.Background(), sintaksdev.ChatRequest{
+        Model:    "${model.id}",
+        Messages: []sintaksdev.Message{{Role: "user", Content: "Hello from sintaks.dev!"}},
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(resp.Content())
+}`;
+
+const openaiSnippet = isEmbedding
+  ? `from openai import OpenAI
+import os
+
+client = OpenAI(
+    base_url="https://api.sintaks.dev/v1",
+    api_key=os.environ["SINTAKS_API_KEY"],
+)
+
+res = client.embeddings.create(
+    model="${model.id}",
+    input="Semantic search with sintaks.dev",
+)
+print(len(res.data[0].embedding))`
+  : isDecision
+  ? `from openai import OpenAI
+import os
+
+client = OpenAI(
+    base_url="https://api.sintaks.dev/v1",
+    api_key=os.environ["SINTAKS_API_KEY"],
+)
+
+decision = client.decisions.create(
+    model="${model.id}",
+    input="The package arrived broken. I want my money back.",
+    questions=[
+        {"type": "predicate", "name": "refund", "instructions": "Is the customer asking for a refund?"},
+    ],
+)
+print(decision.answers)`
+  : `from openai import OpenAI
+import os
+
+client = OpenAI(
+    base_url="https://api.sintaks.dev/v1",
+    api_key=os.environ["SINTAKS_API_KEY"],
+)
+
+resp = client.chat.completions.create(
+    model="${model.id}",
+    messages=[{"role": "user", "content": "Hello from sintaks.dev!"}],
+)
+print(resp.choices[0].message.content)`;
+
+const curlSnippet = isEmbedding
+  ? `curl https://api.sintaks.dev/v1/embeddings \\
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "${model.id}",
+    "input": "Semantic search with sintaks.dev"
+  }'`
+  : isImage
+  ? `curl https://api.sintaks.dev/v1/images/generations \\
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "${model.id}",
+    "prompt": "A minimalist Jakarta tech workspace at sunrise"
+  }'`
+  : isDecision
+  ? `curl https://api.sintaks.dev/v1/decisions \\
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "${model.id}",
+    "input": "The package arrived broken. I want my money back.",
+    "questions": [
+      {"type": "predicate", "name": "refund", "instructions": "Is the customer asking for a refund?"}
+    ]
+  }'`
+  : `curl https://api.sintaks.dev/v1/chat/completions \\
+  -H "Authorization: Bearer $SINTAKS_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "${model.id}",
+    "messages": [{"role": "user", "content": "Hello from sintaks.dev!"}]
+  }'`;
+
+const specRows: { label: string; value: string }[] = [
+  { label: L("models.detail.provider"), value: model.provider },
+  { label: L("models.detail.context"), value: formatContext(contextTokens) },
+  { label: L("models.detail.maxOutput"), value: maxOutputTokens > 0 ? formatContext(maxOutputTokens) : "-" },
+  { label: L("models.detail.release"), value: releaseDate || "-" },
+  ...(detail?.family ? [{ label: L("models.detail.family"), value: detail.family }] : []),
+  ...(detail?.license ? [{ label: L("models.detail.license"), value: detail.license }] : []),
+  ...(detail?.knowledge ? [{ label: "Knowledge", value: detail.knowledge }] : []),
+];
+---
+
+<p>{L("models.detail.priceNote")}</p>
+
+<div class="md-badges">
+  <span class="badge">{model.provider}</span>
+  <span class="badge">{model.kind}</span>
+  {free ? (
+    <span class="badge free">{L("models.preview.freeBadge")}</span>
+  ) : (
+    <span class="badge safe">{L("models.detail.noTraining")}</span>
+  )}
+</div>
+
+<h1>{displayName}</h1>
+
+<p class="md-id">
+  <code>{model.id}</code>{" "}
+  <button type="button" data-copy-id>{L("models.detail.copyId")}</button>
+</p>
+
+{detail?.description && <p>{detail.description}</p>}
+
+{free && (
+  <p class="md-warn">⚠️ {L("models.detail.freeNoTrainingWarning")}</p>
+)}
+
+<h2>{L("models.detail.pricing")}</h2>
+<table class="md-specs">
+  <tbody>
+    <tr>
+      <th>{L("models.th.input")}</th>
+      <td>{free ? "Rp0" : formatIdr(model.input_idr, lang)}</td>
+    </tr>
+    <tr>
+      <th>{L("models.th.output")}</th>
+      <td>{formatIdr(model.output_idr, lang)}</td>
+    </tr>
+    {typeof model.cached_input_idr === "number" && (
+      <tr>
+        <th>{L("models.detail.cachedInput")}</th>
+        <td>{formatIdr(model.cached_input_idr, lang)}</td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
+<h2>{L("models.detail.specs")}</h2>
+<table class="md-specs">
+  <tbody>
+    {specRows.map((row) => (
+      <tr>
+        <th>{row.label}</th>
+        <td>{row.value}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+{(capabilities.length > 0 || inputModalities.length > 0 || outputModalities.length > 0) && (
+  <>
+    {capabilities.length > 0 && (
+      <>
+        <h2>{L("models.detail.capabilities")}</h2>
+        <p class="md-badges">
+          {capabilities.map((cap) => (
+            <span class="badge">{cap}</span>
+          ))}
+        </p>
+      </>
+    )}
+    {(inputModalities.length > 0 || outputModalities.length > 0) && (
+      <>
+        <h2>{L("models.detail.modalities")}</h2>
+        <p>
+          {inputModalities.length > 0 && (
+            <>{L("models.detail.inputModality")}: {inputModalities.join(", ")}</>
+          )}
+          {outputModalities.length > 0 && (
+            <>
+              {" "}· {L("models.detail.outputModality")}: {outputModalities.join(", ")}
+            </>
+          )}
+        </p>
+      </>
+    )}
+  </>
+)}
+
+<h2>{L("models.detail.useInCode")}</h2>
+
+<div class="md-tabs" data-tabs>
+  <button type="button" class="tab active" data-tab="node">Node.js</button>
+  <button type="button" class="tab" data-tab="go">Go</button>
+  <button type="button" class="tab" data-tab="openai">OpenAI SDK</button>
+  <button type="button" class="tab" data-tab="curl">cURL</button>
+</div>
+
+<pre class="md-code active" data-panel="node"><code>{nodeSnippet}</code></pre>
+<pre class="md-code" data-panel="go"><code>{goSnippet}</code></pre>
+<pre class="md-code" data-panel="openai"><code>{openaiSnippet}</code></pre>
+<pre class="md-code" data-panel="curl"><code>{curlSnippet}</code></pre>
+
+<style>
+  .md-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 999px; font-size: 0.78rem; border: 1px solid var(--sl-color-gray-5); }
+  .badge.free { background: var(--sl-color-green-high); color: var(--sl-color-black); }
+  .badge.safe { border-color: var(--sl-color-blue); color: var(--sl-color-blue); }
+  .md-warn { border-left: 3px solid var(--sl-color-orange); padding-left: 0.6rem; }
+  .md-specs { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .md-specs th, .md-specs td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--sl-color-gray-5); text-align: left; }
+  .md-specs th { width: 45%; font-weight: 600; }
+  .md-id code { font-family: var(--sl-font-mono); }
+  .md-tabs { display: flex; gap: 0.25rem; margin: 0.6rem 0; }
+  .md-tabs .tab { padding: 0.3rem 0.8rem; border: 1px solid var(--sl-color-gray-5); background: transparent; cursor: pointer; border-radius: 4px; font-size: 0.85rem; }
+  .md-tabs .tab.active { background: var(--sl-color-gray-6); }
+  .md-code { display: none; padding: 0.9rem; overflow-x: auto; background: var(--sl-color-gray-7); border-radius: 6px; }
+  .md-code.active { display: block; }
+</style>
+
+<script define:vars={{ copiedLabel: L("models.detail.copiedId") }}>
+  const tabs = document.querySelector("[data-tabs]");
+  if (tabs) {
+    tabs.querySelectorAll(".tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-tab");
+        tabs.querySelectorAll(".tab").forEach((b) => b.classList.toggle("active", b === btn));
+        document.querySelectorAll("[data-panel]").forEach((p) =>
+          p.classList.toggle("active", p.getAttribute("data-panel") === target)
+        );
+      });
+    });
+  }
+  const copyBtn = document.querySelector("[data-copy-id]");
+  const code = document.querySelector(".md-id code");
+  copyBtn?.addEventListener("click", () => {
+    if (!code) return;
+    navigator.clipboard.writeText(code.textContent || "").then(() => {
+      const orig = copyBtn.textContent;
+      copyBtn.textContent = copiedLabel;
+      setTimeout(() => { copyBtn.textContent = orig; }, 1800);
+    });
+  });
+</script>

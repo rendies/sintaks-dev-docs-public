@@ -1,0 +1,21 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import ModelDetail from "../../../components/models/ModelDetail.astro";
+import { allModels, formatIdr, t } from "../../../lib/models";
+
+export function getStaticPaths() {
+  return allModels.map((model) => ({
+    params: { slug: model.id },
+    props: { model },
+  }));
+}
+
+const { model } = Astro.props;
+const L = (key: Parameters<typeof t>[1]) => t("id", key);
+const title = `${model.id} — ${L("models.h2")}`;
+const description = `${model.id}: ${L("models.th.input")} ${formatIdr(model.input_idr, "id")}, ${L("models.th.output")} ${formatIdr(model.output_idr, "id")}`;
+---
+
+<StarlightPage frontmatter={{ title, description }}>
+  <ModelDetail lang="id" model={model} />
+</StarlightPage>

@@ -54,19 +54,31 @@ export default defineConfig({
       social: [],
       sidebar: [
         {
-          label: "Quickstart",
-          slug: "index",
-          translations: { id: "Mulai cepat" },
-        },
-        {
-          label: "Guides",
-          translations: { id: "Panduan" },
+          label: "Get started",
+          translations: { id: "Mulai" },
           items: [
             {
-              label: "Authentication",
-              slug: "guides/authentication",
-              translations: { id: "Autentikasi" },
+              label: "Quickstart",
+              slug: "index",
+              translations: { id: "Mulai cepat" },
             },
+          ],
+        },
+        {
+          label: "Models & pricing",
+          translations: { id: "Model & harga" },
+          items: [
+            {
+              label: "Model catalog",
+              slug: "models",
+              translations: { id: "Katalog Model" },
+            },
+          ],
+        },
+        {
+          label: "Billing & account",
+          translations: { id: "Penagihan & akun" },
+          items: [
             {
               label: "Pricing and balance",
               slug: "guides/pricing",
@@ -76,6 +88,17 @@ export default defineConfig({
               label: "Top-ups with iPaymu",
               slug: "guides/top-ups",
               translations: { id: "Top up lewat iPaymu" },
+            },
+          ],
+        },
+        {
+          label: "Guides",
+          translations: { id: "Panduan" },
+          items: [
+            {
+              label: "Authentication",
+              slug: "guides/authentication",
+              translations: { id: "Autentikasi" },
             },
             {
               label: "SDKs & Libraries",
@@ -88,6 +111,22 @@ export default defineConfig({
               translations: { id: "Referensi SDK" },
             },
             {
+              label: "Examples",
+              slug: "guides/examples",
+              translations: { id: "Contoh" },
+            },
+            {
+              label: "Troubleshooting",
+              slug: "guides/troubleshooting",
+              translations: { id: "Pemecahan masalah" },
+            },
+          ],
+        },
+        {
+          label: "Integrations",
+          translations: { id: "Integrasi" },
+          items: [
+            {
               label: "Coding agents",
               slug: "guides/coding-agents",
               translations: { id: "Coding agent" },
@@ -99,16 +138,6 @@ export default defineConfig({
             {
               label: "VS Code",
               slug: "guides/vscode",
-            },
-            {
-              label: "Examples",
-              slug: "guides/examples",
-              translations: { id: "Contoh" },
-            },
-            {
-              label: "Troubleshooting",
-              slug: "guides/troubleshooting",
-              translations: { id: "Pemecahan masalah" },
             },
           ],
         },
