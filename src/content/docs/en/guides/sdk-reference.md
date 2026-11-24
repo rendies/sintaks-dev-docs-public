@@ -9,6 +9,12 @@ and [`sintaks-dev-go`](https://github.com/rendies/sintaks-dev-go) (Go). Both
 wrap the OpenAI-compatible gateway at `https://api.sintaks.dev`; see the
 [examples guide](/en/guides/examples/) for quickstart snippets.
 
+[![npm version](https://img.shields.io/npm/v/@sintaksdev/sdk?style=flat-square&label=npm)](https://www.npmjs.com/package/@sintaksdev/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@sintaksdev/sdk?style=flat-square&label=npm%20downloads)](https://www.npmjs.com/package/@sintaksdev/sdk)
+[![Go version](https://img.shields.io/github/v/tag/rendies/sintaks-dev-go?style=flat-square&label=Go%20SDK)](https://github.com/rendies/sintaks-dev-go)
+[![Go reference](https://pkg.go.dev/badge/github.com/rendies/sintaks-dev-go)](https://pkg.go.dev/github.com/rendies/sintaks-dev-go)
+[![GitHub stars](https://img.shields.io/github/stars/rendies/sintaks-dev-docs-public?style=flat-square&label=GitHub)](https://github.com/rendies/sintaks-dev-docs-public)
+
 ## TypeScript SDK (`@sintaksdev/sdk`)
 
 Zero runtime dependencies; requires Node >= 18 (global `fetch`).

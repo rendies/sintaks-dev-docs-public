@@ -20,6 +20,10 @@ export default defineConfig({
         en: { label: "English", lang: "en" },
       },
       customCss: ["./src/styles/custom.css"],
+      components: {
+        Header: "./src/components/Header.astro",
+        SiteTitle: "./src/components/SiteTitle.astro",
+      },
       // Brand is light-first: seed the theme to light for first-time visitors.
       // Runs during parse, before first paint, so there is no flash.
       head: [
@@ -213,6 +217,11 @@ export default defineConfig({
               label: "Messages",
               slug: "reference/messages",
               translations: { id: "Messages" },
+            },
+            {
+              label: "Videos",
+              slug: "reference/videos",
+              translations: { id: "Videos" },
             },
             { label: "Errors", slug: "reference/errors", translations: { id: "Error" } },
           ],

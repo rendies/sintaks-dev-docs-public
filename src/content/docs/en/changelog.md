@@ -3,6 +3,19 @@ title: Changelog
 description: User-facing changes to the sintaks.dev API and documentation.
 ---
 
+## 2026-11-24
+
+- **Async video generation** — new `POST /v1/videos` (create a job), `GET /v1/videos/{id}` (poll status), and `GET /v1/videos/{id}/content` (redirect to the hosted result). See the [Videos reference](/en/reference/videos/).
+- **Per-endpoint API reference** — the API reference now has a dedicated page per endpoint with full request and response field tables: [List models](/en/reference/models/), [Chat completions](/en/reference/chat-completions/), [Embeddings](/en/reference/embeddings/), [Image generation](/en/reference/images-generations/), [Image edits](/en/reference/images-edits/), [Responses](/en/reference/responses/), [Decisions](/en/reference/decisions/), and [Messages](/en/reference/messages/).
+- **Dedicated SDK guides** — new [TypeScript/JavaScript SDK](/en/guides/sdk-javascript/) and [Go SDK](/en/guides/sdk-go/) pages with install, reference, samples, error handling, and troubleshooting.
+- **Coding agents reorganized** — the [Coding agents](/en/guides/coding-agents/) guide is split into CLI agents, IDE integrations, and production apps, with dedicated sub-pages for [OpenCode](/en/guides/coding-agents/opencode/) and [Hermes](/en/guides/coding-agents/hermes/).
+- **Top-up steps** — the [top-up guide](/en/guides/top-ups/) is now a step-by-step flow ending with the invoice email.
+- **Docs site** — docs.sintaks.dev now serves the default-language content directly at the root (no redirect), the logo links to sintaks.dev, and the header includes Log in / Sign up buttons.
+
+## 2026-11-23
+
+- **`POST /v1/images/edits`** — image-to-image edits (img2img / inpainting) are documented in the API reference, and the JS/Go SDKs expose `client.images.edits` / `EditImage`.
+
 ## 2026-11-19
 
 - **`POST /v1/messages`** — Anthropic Messages API-compatible endpoint. Use it from Claude Code (`ANTHROPIC_BASE_URL=https://api.sintaks.dev/v1`), the Anthropic SDKs, or any Anthropic-compatible client. Supports `system` (string or text blocks), streaming (`content_block_*` events), `tools` / `tool_choice`, image input, and `stop_sequences`. See the [Claude Code guide](/en/guides/claude-code/).

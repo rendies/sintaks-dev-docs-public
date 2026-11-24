@@ -5,6 +5,9 @@ description: Use sintaks.dev models in GitHub Copilot Chat with the sintaks.dev 
 
 The sintaks.dev extension registers sintaks.dev as a language model provider in VS Code, so models from the sintaks.dev catalog appear in the VS Code model picker. Requests are billed per-request to your organization balance in IDR.
 
+[![VS Code extension](https://img.shields.io/badge/VS%20Code-v1.0.0-blue?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=sintaks-dev.sintaks-dev-copilot-provider)
+[![Install](https://img.shields.io/badge/Install-Marketplace-blue?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=sintaks-dev.sintaks-dev-copilot-provider)
+
 ## Before you start
 
 1. Install **VS Code 1.104 or later** with GitHub Copilot Chat available (built into recent VS Code releases; on older versions install the [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) extension). The model provider API requires both, and third-party models are only surfaced to individual GitHub Copilot plans.

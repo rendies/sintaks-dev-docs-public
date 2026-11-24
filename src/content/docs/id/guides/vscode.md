@@ -5,6 +5,9 @@ description: Gunakan model sintaks.dev di GitHub Copilot Chat lewat ekstensi VS 
 
 Ekstensi sintaks.dev mendaftarkan sintaks.dev sebagai language model provider di VS Code, sehingga model dari katalog sintaks.dev muncul di pemilih model VS Code. Setiap permintaan ditagih per-request ke saldo organisasi Anda dalam IDR.
 
+[![VS Code extension](https://img.shields.io/badge/VS%20Code-v1.0.0-blue?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=sintaks-dev.sintaks-dev-copilot-provider)
+[![Install](https://img.shields.io/badge/Install-Marketplace-blue?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=sintaks-dev.sintaks-dev-copilot-provider)
+
 ## Sebelum mulai
 
 1. Pasang **VS Code 1.104 atau lebih baru** dengan GitHub Copilot Chat tersedia (bawaan pada rilis VS Code terbaru; pada versi lama pasang ekstensi [GitHub Copilot Chat](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat)). API model provider memerlukan keduanya, dan model pihak ketiga hanya muncul untuk paket GitHub Copilot individual.

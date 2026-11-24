@@ -9,6 +9,12 @@ dan [`sintaks-dev-go`](https://github.com/rendies/sintaks-dev-go) (Go). Keduanya
 mengakses gateway kompatibel OpenAI di `https://api.sintaks.dev`; lihat
 [panduan contoh](/id/guides/examples/) untuk cuplikan quickstart.
 
+[![npm version](https://img.shields.io/npm/v/@sintaksdev/sdk?style=flat-square&label=npm)](https://www.npmjs.com/package/@sintaksdev/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@sintaksdev/sdk?style=flat-square&label=npm%20downloads)](https://www.npmjs.com/package/@sintaksdev/sdk)
+[![Go version](https://img.shields.io/github/v/tag/rendies/sintaks-dev-go?style=flat-square&label=Go%20SDK)](https://github.com/rendies/sintaks-dev-go)
+[![Go reference](https://pkg.go.dev/badge/github.com/rendies/sintaks-dev-go)](https://pkg.go.dev/github.com/rendies/sintaks-dev-go)
+[![GitHub stars](https://img.shields.io/github/stars/rendies/sintaks-dev-docs-public?style=flat-square&label=GitHub)](https://github.com/rendies/sintaks-dev-docs-public)
+
 ## TypeScript SDK (`@sintaksdev/sdk`)
 
 Tanpa dependensi runtime; memerlukan Node >= 18 (global `fetch`).

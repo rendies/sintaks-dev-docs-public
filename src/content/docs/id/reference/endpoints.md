@@ -17,5 +17,6 @@ Setiap endpoint memiliki halaman sendiri dengan referensi lengkap field request 
 | `POST /v1/responses` | [Responses](./responses) |
 | `POST /v1/decisions` | [Decisions](./decisions) |
 | `POST /v1/messages` | [Messages](./messages) |
+| `POST /v1/videos` | [Videos](./videos) |
 
 Pengelolaan akun, API key, saldo, usage, dan top up tersedia di portal customer.

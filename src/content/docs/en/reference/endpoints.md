@@ -17,5 +17,6 @@ Each endpoint has its own page with full request and response field references:
 | `POST /v1/responses` | [Responses](./responses) |
 | `POST /v1/decisions` | [Decisions](./decisions) |
 | `POST /v1/messages` | [Messages](./messages) |
+| `POST /v1/videos` | [Videos](./videos) |
 
 Account, API-key, balance, usage, and top-up management are available in the customer portal.

@@ -8,6 +8,12 @@ API sintaks.dev kompatibel dengan OpenAI sehingga client yang telah tersedia dap
 - **TypeScript / JavaScript** — [`@sintaksdev/sdk`](https://www.npmjs.com/package/@sintaksdev/sdk) di npm. Lihat panduan khusus [TypeScript/JavaScript SDK](./sdk-javascript).
 - **Go** — [`github.com/rendies/sintaks-dev-go`](https://github.com/rendies/sintaks-dev-go). Lihat panduan khusus [Go SDK](./sdk-go).
 
+[![npm version](https://img.shields.io/npm/v/@sintaksdev/sdk?style=flat-square&label=npm)](https://www.npmjs.com/package/@sintaksdev/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@sintaksdev/sdk?style=flat-square&label=npm%20downloads)](https://www.npmjs.com/package/@sintaksdev/sdk)
+[![Go version](https://img.shields.io/github/v/tag/rendies/sintaks-dev-go?style=flat-square&label=Go%20SDK)](https://github.com/rendies/sintaks-dev-go)
+[![Go reference](https://pkg.go.dev/badge/github.com/rendies/sintaks-dev-go)](https://pkg.go.dev/github.com/rendies/sintaks-dev-go)
+[![GitHub stars](https://img.shields.io/github/stars/rendies/sintaks-dev-docs-public?style=flat-square&label=GitHub)](https://github.com/rendies/sintaks-dev-docs-public)
+
 Untuk bahasa lain, gunakan SDK OpenAI dengan `base_url` kustom:
 
 | Bahasa | Package | Base URL |

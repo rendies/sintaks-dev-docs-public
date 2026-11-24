@@ -1,4 +1,13 @@
 ---
-// Root path redirects to the default locale (/id).
-return Astro.redirect("/id/");
+// Serve the default-locale (id) Quickstart directly at the root path so
+// docs.sintaks.dev shows content immediately instead of a redirect page.
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import Quickstart from "../content/docs/id/index.mdx";
+
+const title = "Mulai cepat";
+const description = "Panggil API sintaks.dev pertama Anda dalam beberapa menit. Mulai gratis, top up QRIS dari Rp10.000, dan gunakan chat, image, embeddings, dan decision endpoint.";
 ---
+
+<StarlightPage frontmatter={{ title, description }}>
+  <Quickstart />
+</StarlightPage>
