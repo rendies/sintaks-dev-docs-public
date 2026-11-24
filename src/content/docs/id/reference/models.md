@@ -47,7 +47,7 @@ Menampilkan model aktif yang dilayani gateway. Endpoint ini **publik** — tidak
 | `data[].premium` | boolean | Apakah model memerlukan grant premium. |
 | `data[].context_window` | integer | Context window dalam token, jika diketahui. |
 | `data[].aliases` | array | ID alternatif yang mengarah ke model ini. |
-| `data[].pricing` | object | Tarif pelanggan dalam USD per 1M token (sudah termasuk markup). |
+| `data[].pricing` | object | Tarif pelanggan dalam USD per 1M token. |
 | `data[].pricing.input_usd_per_1m` | number | Tarif input. |
 | `data[].pricing.output_usd_per_1m` | number | Tarif output. |
 | `data[].pricing_idr_per_1m` | object | Tarif yang sama dalam IDR per 1M token. |

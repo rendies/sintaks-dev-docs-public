@@ -47,7 +47,7 @@ Lists the active models served by the gateway. This endpoint is **public** — n
 | `data[].premium` | boolean | Whether the model requires a premium grant. |
 | `data[].context_window` | integer | Context window in tokens, when known. |
 | `data[].aliases` | array | Alternative IDs that alias to this model. |
-| `data[].pricing` | object | Customer rate card in USD per 1M tokens (markup included). |
+| `data[].pricing` | object | Customer rate card in USD per 1M tokens. |
 | `data[].pricing.input_usd_per_1m` | number | Input rate. |
 | `data[].pricing.output_usd_per_1m` | number | Output rate. |
 | `data[].pricing_idr_per_1m` | object | The same card in IDR per 1M tokens. |
