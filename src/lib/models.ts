@@ -24,6 +24,11 @@ export interface PricingModel {
   cached_input_mc?: number;
   cached_input_idr?: number;
   aliases?: string[];
+  video_pricing?: {
+    unit: "second" | "token";
+    idr_per_sec?: number;
+    mc_per_sec?: number;
+  };
 }
 
 export interface ModelDevDetail {
@@ -291,4 +296,27 @@ export const ui: Record<Locale, Record<UiKey, string>> = {
 
 export function t(lang: Locale, key: UiKey): string {
   return ui[lang][key];
+}
+
+export function isVideoPerSecond(model: PricingModel): boolean {
+  return (
+    model.kind === "video" &&
+    (model.video_pricing?.unit === "second" ||
+      (!model.video_pricing && model.output_mc >= 20_000_000))
+  );
+}
+
+export function formatInputPrice(model: PricingModel, lang: Locale): string {
+  if (model.kind === "video" && model.input_idr === 0) return "—";
+  if (isFreeModel(model)) return "Rp0";
+  return formatIdr(model.input_idr, lang);
+}
+
+export function formatOutputPrice(model: PricingModel, lang: Locale): string {
+  if (isFreeModel(model)) return "Rp0";
+  if (isVideoPerSecond(model)) {
+    const perSec = model.video_pricing?.idr_per_sec ?? Math.round(model.output_idr / 1000);
+    return `${formatIdr(perSec, lang)} / ${lang === "id" ? "dtk" : "s"}`;
+  }
+  return formatIdr(model.output_idr, lang);
 }

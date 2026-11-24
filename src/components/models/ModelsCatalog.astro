@@ -3,7 +3,8 @@ import {
   allModels,
   catalogUpdated,
   formatContext,
-  formatIdr,
+  formatInputPrice,
+  formatOutputPrice,
   getKinds,
   getProviders,
   getReleaseDate,
@@ -86,8 +87,8 @@ const sortedModels = [...allModels].sort((a, b) => a.id.localeCompare(b.id));
               <td>{kind}</td>
               <td>{release || "-"}</td>
               <td>{formatContext(m.context)}</td>
-              <td class="r">{free ? "Rp0" : formatIdr(m.input_idr, lang)}</td>
-              <td class="r">{formatIdr(m.output_idr, lang)}</td>
+              <td class="r">{formatInputPrice(m, lang)}</td>
+              <td class="r">{formatOutputPrice(m, lang)}</td>
             </tr>
           );
         })}
